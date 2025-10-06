@@ -1,0 +1,57 @@
+#ddev-generated
+services:
+  alfresco:
+    image: ${ALFRESCO_IMAGE:-alfresco/alfresco-content-repository-community:23.1.0}
+    container_name: ddev-${DDEV_SITENAME}-alfresco
+    hostname: ${DDEV_SITENAME}-alfresco
+    labels:
+      com.ddev.site-name: ${DDEV_SITENAME}
+      com.ddev.approot: ${DDEV_APPROOT}
+    environment:
+      JAVA_TOOL_OPTIONS: "-Xms1500m -Xmx1500m"
+      VIRTUAL_HOST: ${DDEV_HOSTNAME}
+      HTTP_EXPOSE: 8080:8080
+      HTTPS_EXPOSE: 8081:8080
+      CATALINA_OPTS: >-
+        -Dalfresco.host=alfresco
+        -Dalfresco.port=8080
+        -Ddb.driver=org.postgresql.Driver
+        -Ddb.username=alfresco
+        -Ddb.password=alfresco
+        -Ddb.url=jdbc:postgresql://postgres-alfresco:5432/alfresco
+        -Dindex.subsystem.name=noindex
+        -Dmessaging.subsystem.autoStart=false
+        -Dtransform.service.enabled=false
+        -Dlocal.transform.service.enabled=false
+        -Dlegacy.transform.service.enabled=false
+    volumes:
+      - alfresco-data:/usr/local/tomcat/alf_data
+      - .:/mnt/ddev_config
+      - ddev-global-cache:/mnt/ddev-global-cache
+    depends_on:
+      - postgres-alfresco
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/alfresco/api/-default-/public/alfresco/versions/1/probes/-ready-"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+      start_period: 180s
+
+  postgres-alfresco:
+    image: ${POSTGRES_IMAGE:-postgres:14.4}
+    container_name: ddev-${DDEV_SITENAME}-postgres-alfresco
+    hostname: ${DDEV_SITENAME}-postgres-alfresco
+    labels:
+      com.ddev.site-name: ${DDEV_SITENAME}
+      com.ddev.approot: ${DDEV_APPROOT}
+    environment:
+      POSTGRES_USER: alfresco
+      POSTGRES_PASSWORD: alfresco
+      POSTGRES_DB: alfresco
+    volumes:
+      - postgres-alfresco-data:/var/lib/postgresql/data
+      - .:/mnt/ddev_config
+
+volumes:
+  alfresco-data:
+  postgres-alfresco-data:

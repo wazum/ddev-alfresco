@@ -1,0 +1,19 @@
+name: ddev-alfresco
+
+project_files:
+  - docker-compose.alfresco.yaml
+  - commands
+
+post_install_actions:
+  - |
+    #ddev-description: Alfresco add-on installed
+    echo "Alfresco add-on installed successfully."
+    echo "Run 'ddev restart' to start services."
+    echo "After restart, run 'ddev alfresco-wait' to wait for initialization."
+    echo "Access Alfresco at: ddev launch :8081/alfresco"
+
+removal_actions:
+  - |
+    #ddev-description: Remove Alfresco volumes
+    echo "Removing Alfresco volumes..."
+    docker volume rm "ddev-${DDEV_SITENAME}-alfresco-data" "ddev-${DDEV_SITENAME}-postgres-alfresco-data" 2>/dev/null || true

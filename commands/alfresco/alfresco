@@ -1,0 +1,11 @@
+#!/bin/bash
+
+## Description: Execute commands in Alfresco container
+## Usage: alfresco [command]
+## Example: "ddev alfresco bash" or "ddev alfresco ls /usr/local/tomcat/alf_data"
+
+if [ $# -eq 0 ]; then
+    exec bash
+else
+    exec "$@"
+fi
