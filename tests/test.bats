@@ -6,7 +6,7 @@ setup_file() {
   export TESTDIR=$(mktemp -d -t ddev-alfresco-test.XXXX)
   export DDEV_NON_INTERACTIVE=true
   cd ${TESTDIR}
-  ddev config --project-name=test-alfresco
+  ddev config --project-name=test-alfresco --default-container-timeout=600
   ddev start -y
   echo "# Installing addon from ${DIR}"
   ddev add-on get ${DIR}
