@@ -4,7 +4,7 @@
 ## Usage: alfresco-status
 ## Example: "ddev alfresco-status"
 
-if ! ddev exec -s alfresco curl -f -s http://localhost:8080/alfresco/s/api/server > /dev/null 2>&1; then
+if ! ddev exec -s alfresco curl -f -s http://localhost:8080/alfresco/api/-default-/public/alfresco/versions/1/probes/-ready- > /dev/null 2>&1; then
     echo "Alfresco is not ready yet. Run 'ddev alfresco-wait' to wait for initialization."
     exit 1
 fi

@@ -10,10 +10,10 @@ ATTEMPT=0
 echo "Waiting for Alfresco to be ready..."
 
 while [ $ATTEMPT -lt $MAX_ATTEMPTS ]; do
-    if curl -f -s http://alfresco:8080/alfresco/s/api/server > /dev/null 2>&1; then
+    if curl -f -s -u admin:admin http://alfresco:8080/alfresco/api/-default-/public/alfresco/versions/1/probes/-ready- > /dev/null 2>&1; then
         echo "✓ Alfresco is ready!"
         echo "  Access at: https://${DDEV_HOSTNAME}:8081/alfresco"
-        echo "  Default credentials (unless changed): admin/admin"
+        echo "  Default credentials: admin/admin"
         exit 0
     fi
 
