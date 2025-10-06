@@ -1,5 +1,7 @@
 name: ddev-alfresco
 
+ddev_version_constraint: '>= v1.21.0'
+
 project_files:
   - docker-compose.alfresco.yaml
   - commands
