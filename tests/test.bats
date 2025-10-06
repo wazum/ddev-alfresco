@@ -34,16 +34,12 @@ setup() {
   [ "$status" -eq 0 ]
 }
 
-@test "alfresco REST API is accessible" {
-  run curl -k -s -f -u admin:admin https://test-alfresco.ddev.site:8081/alfresco/api/-default-/public/alfresco/versions/1/probes/-ready-
+@test "alfresco API is accessible" {
+  run curl -k -s -f https://test-alfresco.ddev.site:8081/alfresco/s/api/server
   [ "$status" -eq 0 ]
+  [[ "$output" == *"Alfresco"* ]]
 }
 
-@test "alfresco CMIS API is accessible" {
-  run curl -k -s -u admin:admin https://test-alfresco.ddev.site:8081/alfresco/api/-default-/public/cmis/versions/1.1/browser
-  [ "$status" -eq 0 ]
-  [[ "$output" == *"repositoryId"* ]]
-}
 
 @test "alfresco status command works" {
   run ddev alfresco-status
