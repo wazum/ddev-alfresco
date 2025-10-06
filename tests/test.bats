@@ -7,10 +7,9 @@ setup_file() {
   export DDEV_NON_INTERACTIVE=true
   cd ${TESTDIR}
   ddev config --project-name=test-alfresco --default-container-timeout=600
-  ddev start -y
   echo "# Installing addon from ${DIR}"
   ddev add-on get ${DIR}
-  ddev restart
+  ddev start -y
   ddev alfresco-wait
 }
 
