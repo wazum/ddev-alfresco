@@ -1,10 +1,15 @@
 # ddev-alfresco
 
+[![tests](https://github.com/wazum/ddev-alfresco/actions/workflows/tests.yml/badge.svg)](https://github.com/wazum/ddev-alfresco/actions/workflows/tests.yml)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
 Minimal Alfresco Community Edition integration for DDEV projects.
 
 ## What is this?
 
-This add-on provides a lightweight Alfresco Community Edition setup optimized for API access and development. It runs Alfresco Content Repository with PostgreSQL, with search indexing and transform services disabled for minimal resource usage.
+This add-on provides a lightweight Alfresco Community Edition setup optimized for local development of applications that integrate with Alfresco's REST API, CMIS API, or WebDAV interface. Perfect for developing custom connectors, file management integrations, or document-centric applications without the overhead of a full Alfresco deployment.
+
+The setup runs Alfresco Content Repository with PostgreSQL, with search indexing and transform services disabled for minimal resource usage. This gives you a fast, API-ready Alfresco instance that starts in minutes and uses 4-6GB RAM instead of 16GB+.
 
 ## Installation
 
@@ -75,6 +80,18 @@ web_environment:
 ```
 
 Then restart: `ddev restart`
+
+## Automatic Initialization
+
+To ensure Alfresco is ready after every `ddev start` or `ddev restart`, add this hook to your `.ddev/config.yaml`:
+
+```yaml
+hooks:
+  post-start:
+    - exec-host: ddev alfresco-wait
+```
+
+This automatically waits for Alfresco to fully initialize before returning control, so your application can immediately connect to the API.
 
 ## System Requirements
 
