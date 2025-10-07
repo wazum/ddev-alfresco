@@ -181,8 +181,8 @@ This automatically waits for Alfresco to fully initialize before returning contr
 
 ## Services
 
-- **Alfresco Content Repository** v23.1.0 (Community Edition)
-- **PostgreSQL** v14.4
+- **Alfresco Content Repository** v23.x (Community Edition)
+- **PostgreSQL** v15.7
 
 Search indexing (Solr), document transformation, and message queue services are disabled for minimal resource usage. These can be added later if needed.
 
