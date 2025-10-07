@@ -14,7 +14,8 @@ while [ $ATTEMPT -lt $MAX_ATTEMPTS ]; do
     if curl -f -s -u admin:admin http://alfresco:8080/alfresco/api/-default-/public/alfresco/versions/1/probes/-ready- > /dev/null 2>&1; then
         echo "✓ Alfresco is ready!"
         PRIMARY_HOSTNAME=$(echo ${DDEV_PRIMARY_URL} | sed 's|https://||')
-        echo "  Access at: https://${PRIMARY_HOSTNAME}:8081/alfresco"
+        echo "  Alfresco: https://${PRIMARY_HOSTNAME}:8081/alfresco"
+        echo "  Share: https://${PRIMARY_HOSTNAME}:8081/share"
         echo "  Default credentials: admin/admin"
         exit 0
     fi

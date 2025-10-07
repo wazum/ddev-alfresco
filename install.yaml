@@ -12,7 +12,7 @@ post_install_actions:
     echo "Alfresco add-on installed successfully."
     echo "Run 'ddev restart' to start services."
     echo "After restart, run 'ddev alfresco-wait' to wait for initialization."
-    echo "Access Alfresco at: ddev launch :8081/alfresco"
+    echo "Access Alfresco at: 'ddev launch :8081/alfresco'"
 
 removal_actions:
   - |

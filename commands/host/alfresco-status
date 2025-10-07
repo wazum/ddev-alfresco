@@ -12,6 +12,7 @@ fi
 
 echo "✓ Alfresco is running and ready"
 PRIMARY_HOSTNAME=$(echo ${DDEV_PRIMARY_URL} | sed 's|https://||')
-echo "  Access at: https://${PRIMARY_HOSTNAME}:8081/alfresco"
-echo "  REST API: https://${PRIMARY_HOSTNAME}:8081/alfresco/api"
+echo "  Alfresco: https://${PRIMARY_HOSTNAME}:8081/alfresco"
+echo "  Share: https://${PRIMARY_HOSTNAME}:8081/share"
+echo "  REST API: https://${PRIMARY_HOSTNAME}:8081/alfresco/api (requires authentication)"
 echo "  CMIS: https://${PRIMARY_HOSTNAME}:8081/alfresco/cmis"

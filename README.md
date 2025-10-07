@@ -23,15 +23,36 @@ The first startup takes 3-5 minutes while Alfresco initializes.
 
 ## Access
 
-**Web Interface:**
+**Web Interfaces:**
 ```bash
-ddev launch :8081/alfresco
+ddev launch :8081/alfresco  # Alfresco Repository
+ddev launch :8081/share     # Alfresco Share (Web UI)
 ```
 
 **API Endpoints (external):**
 - REST API: `https://<project>.ddev.site:8081/alfresco/api/-default-/public/alfresco/versions/1`
 - CMIS: `https://<project>.ddev.site:8081/alfresco/api/-default-/public/cmis/versions/1.1/browser`
 - WebDAV: `https://<project>.ddev.site:8081/alfresco/webdav`
+
+**Authentication for REST API:**
+
+Option 1 - Basic Authentication (easiest):
+```bash
+# Example: Get node information
+curl -u admin:admin https://<project>.ddev.site:8081/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-
+```
+
+Option 2 - Ticket-based Authentication:
+```bash
+# 1. Get authentication ticket
+TICKET=$(curl -X POST https://<project>.ddev.site:8081/alfresco/api/-default-/public/authentication/versions/1/tickets \
+  -H "Content-Type: application/json" \
+  -d '{"userId":"admin","password":"admin"}' | jq -r .entry.id)
+
+# 2. Use ticket in subsequent requests
+curl https://<project>.ddev.site:8081/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root- \
+  -H "Authorization: Basic $(echo -n $TICKET | base64)"
+```
 
 **API Endpoints (internal, from web container):**
 - REST API: `http://alfresco:8080/alfresco/api/-default-/public/alfresco/versions/1`
@@ -56,10 +77,9 @@ ddev logs -s alfresco           # View Alfresco logs (standard DDEV command)
 ddev logs -s postgres-alfresco  # View PostgreSQL logs (standard DDEV command)
 ```
 
-## Integration Example
+## Integration Examples
 
-Connect to Alfresco from your application using internal endpoints:
-
+### PHP with Basic Authentication
 ```php
 $config = [
     'alfresco_endpoint' => 'http://alfresco:8080/alfresco/api/-default-/public/alfresco/versions/1',
@@ -67,6 +87,30 @@ $config = [
     'username' => 'admin',
     'password' => 'admin',
 ];
+
+// Example: List root folder contents
+$ch = curl_init($config['alfresco_endpoint'] . '/nodes/-root-/children');
+curl_setopt($ch, CURLOPT_USERPWD, $config['username'] . ':' . $config['password']);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+$response = curl_exec($ch);
+$data = json_decode($response, true);
+```
+
+### JavaScript/Node.js with Basic Authentication
+```javascript
+const config = {
+    endpoint: 'http://alfresco:8080/alfresco/api/-default-/public/alfresco/versions/1',
+    auth: Buffer.from('admin:admin').toString('base64')
+};
+
+// Example: Get node information
+fetch(`${config.endpoint}/nodes/-root-`, {
+    headers: {
+        'Authorization': `Basic ${config.auth}`
+    }
+})
+.then(response => response.json())
+.then(data => console.log(data));
 ```
 
 ## Configuration

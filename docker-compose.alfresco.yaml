@@ -34,10 +34,10 @@ services:
         -Dlegacy.transform.service.enabled=false
         -Dcsrf.filter.enabled=false
         -Dalfresco.protocol=https
-        -Dalfresco.host=${DDEV_HOSTNAME}
+        -Dalfresco.host=${DDEV_SITENAME}.${DDEV_TLD}
         -Dalfresco.port=8081
         -Dshare.protocol=https
-        -Dshare.host=${DDEV_HOSTNAME}
+        -Dshare.host=${DDEV_SITENAME}.${DDEV_TLD}
         -Dshare.port=8081
     volumes:
       - alfresco-data:/usr/local/tomcat/alf_data
