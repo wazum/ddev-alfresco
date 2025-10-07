@@ -1,4 +1,5 @@
 #!/bin/bash
+#ddev-generated
 
 ## Description: Check Alfresco service status
 ## Usage: alfresco-status

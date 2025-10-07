@@ -1,4 +1,5 @@
 #!/bin/bash
+#ddev-generated
 
 ## Description: Execute commands in Alfresco container
 ## Usage: alfresco [command]

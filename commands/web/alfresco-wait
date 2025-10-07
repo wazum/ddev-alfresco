@@ -1,4 +1,5 @@
 #!/bin/bash
+#ddev-generated
 
 ## Description: Wait for Alfresco to be ready
 ## Usage: alfresco-wait
