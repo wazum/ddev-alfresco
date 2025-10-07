@@ -25,7 +25,7 @@ The first startup takes 3-5 minutes while Alfresco initializes.
 
 **Web Interface:**
 ```bash
-ddev launch :8081/alfresco  # Alfresco Repository landing page
+ddev launch :8081/alfresco
 ```
 
 **Note:** This addon provides a minimal API-focused Alfresco setup. Alfresco Share (the traditional web UI) is not included to keep resource usage low. For DMS integrations via REST API, CMIS, or WebDAV, Share is not needed. If you require the full Alfresco web interface, you would need to add a separate Share container to the docker-compose configuration.
