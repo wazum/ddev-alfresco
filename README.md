@@ -78,6 +78,30 @@ ddev logs -s alfresco           # View Alfresco logs (standard DDEV command)
 ddev logs -s postgres-alfresco  # View PostgreSQL logs (standard DDEV command)
 ```
 
+## REST API Capabilities for CMS/DMS Integration
+
+The Alfresco REST API provides complete functionality for DMS integrations:
+
+### Core Operations Supported
+- **Folder Management**: Create, rename, move, delete folders with full hierarchy support
+- **File Operations**: Upload, download, copy, move, rename, delete files with metadata
+- **Navigation**: Browse folder structures, resolve paths, get parent/child relationships
+- **Pagination**: Handle large directories with `skipCount` and `maxItems` parameters
+- **Filtering**: Query by file type, folder type, or custom properties
+- **Metadata**: Full support for custom properties, versioning, and permissions
+- **Streaming**: Direct file content access via `/nodes/{nodeId}/content` endpoint
+
+### Key REST Endpoints
+- `GET/POST /nodes/{nodeId}` - Node CRUD operations
+- `GET /nodes/{nodeId}/children` - List folder contents with pagination
+- `GET /nodes/{nodeId}/content` - Stream file content
+- `POST /nodes/{nodeId}/copy` - Copy files/folders
+- `POST /nodes/{nodeId}/move` - Move files/folders
+- `DELETE /nodes/{nodeId}` - Soft delete to trash
+- `GET /deleted-nodes` - Access trash/recycle bin
+
+All operations return standard HTTP status codes and JSON responses, making integration straightforward for any programming language or framework.
+
 ## Integration Examples
 
 ### PHP with Basic Authentication
@@ -116,15 +140,26 @@ fetch(`${config.endpoint}/nodes/-root-`, {
 
 ## Configuration
 
-Override default versions using environment variables in `.ddev/config.yaml`:
+### Using Alternate Versions of Alfresco
 
-```yaml
-web_environment:
-  - ALFRESCO_IMAGE=alfresco/alfresco-content-repository-community:23.2.0
-  - POSTGRES_IMAGE=postgres:15
+If you need to use a different version of Alfresco or PostgreSQL, you can set environment variables in `.ddev/.env.alfresco`:
+
+```bash
+# Set the desired versions
+ddev dotenv set .ddev/.env.alfresco --alfresco-image="alfresco/alfresco-content-repository-community:23.2.0"
+ddev dotenv set .ddev/.env.alfresco --postgres-image="postgres:15"
+
+# Remove old volumes and restart
+ddev stop
+docker volume rm ddev-${DDEV_SITENAME}-alfresco-data ddev-${DDEV_SITENAME}-postgres-alfresco-data
+ddev start
 ```
 
-Then restart: `ddev restart`
+The addon uses these default versions:
+- Alfresco: `alfresco/alfresco-content-repository-community:23.2.1`
+- PostgreSQL: `postgres:15.7`
+
+**Note:** When changing versions, you may need to remove the old volumes to avoid compatibility issues. Make sure to commit the `.ddev/.env.alfresco` file to version control to share the configuration with your team.
 
 ## Automatic Initialization
 
