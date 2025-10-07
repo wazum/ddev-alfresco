@@ -10,6 +10,7 @@ if ! ddev exec -s alfresco curl -f -s http://localhost:8080/alfresco/api/-defaul
 fi
 
 echo "✓ Alfresco is running and ready"
-echo "  Access at: https://${DDEV_HOSTNAME}:8081/alfresco"
-echo "  REST API: https://${DDEV_HOSTNAME}:8081/alfresco/api"
-echo "  CMIS: https://${DDEV_HOSTNAME}:8081/alfresco/cmis"
+PRIMARY_HOSTNAME=$(echo ${DDEV_PRIMARY_URL} | sed 's|https://||')
+echo "  Access at: https://${PRIMARY_HOSTNAME}:8081/alfresco"
+echo "  REST API: https://${PRIMARY_HOSTNAME}:8081/alfresco/api"
+echo "  CMIS: https://${PRIMARY_HOSTNAME}:8081/alfresco/cmis"
