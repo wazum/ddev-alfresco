@@ -75,7 +75,7 @@ ddev alfresco-wait              # Wait for Alfresco to be ready
 ddev alfresco-status            # Check service health
 ddev alfresco [command]         # Execute command in Alfresco container
 ddev logs -s alfresco           # View Alfresco logs (standard DDEV command)
-ddev logs -s postgres-alfresco  # View PostgreSQL logs (standard DDEV command)
+ddev logs -s alfresco-postgres  # View PostgreSQL logs (standard DDEV command)
 ```
 
 ## REST API Capabilities for CMS/DMS Integration
@@ -151,7 +151,7 @@ ddev dotenv set .ddev/.env.alfresco --postgres-image="postgres:15"
 
 # Remove old volumes and restart
 ddev stop
-docker volume rm ddev-${DDEV_SITENAME}-alfresco-data ddev-${DDEV_SITENAME}-postgres-alfresco-data
+docker volume rm ddev-${DDEV_SITENAME}-alfresco-data ddev-${DDEV_SITENAME}-alfresco-postgres-data
 ddev start
 ```
 

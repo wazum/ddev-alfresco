@@ -29,8 +29,8 @@ setup() {
   [ "$status" -eq 0 ]
 }
 
-@test "postgres-alfresco service is running" {
-  run ddev exec -s postgres-alfresco psql -U alfresco -c "SELECT 1"
+@test "alfresco-postgres service is running" {
+  run ddev exec -s alfresco-postgres psql -U alfresco -c "SELECT 1"
   [ "$status" -eq 0 ]
 }
 

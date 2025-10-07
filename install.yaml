@@ -18,4 +18,4 @@ removal_actions:
   - |
     #ddev-description: Remove Alfresco volumes
     echo "Removing Alfresco volumes..."
-    docker volume rm "ddev-${DDEV_SITENAME}-alfresco-data" "ddev-${DDEV_SITENAME}-postgres-alfresco-data" 2>/dev/null || true
+    docker volume rm "ddev-${DDEV_SITENAME}-alfresco-data" "ddev-${DDEV_SITENAME}-alfresco-postgres-data" 2>/dev/null || true

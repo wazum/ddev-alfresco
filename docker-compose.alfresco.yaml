@@ -26,7 +26,7 @@ services:
         -Ddb.driver=org.postgresql.Driver
         -Ddb.username=alfresco
         -Ddb.password=alfresco
-        -Ddb.url=jdbc:postgresql://postgres-alfresco:5432/alfresco
+        -Ddb.url=jdbc:postgresql://alfresco-postgres:5432/alfresco
         -Dindex.subsystem.name=noindex
         -Dmessaging.subsystem.autoStart=false
         -Dtransform.service.enabled=false
@@ -44,7 +44,7 @@ services:
       - .:/mnt/ddev_config
       - ddev-global-cache:/mnt/ddev-global-cache
     depends_on:
-      postgres-alfresco:
+      alfresco-postgres:
         condition: service_healthy
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/alfresco/api/-default-/public/alfresco/versions/1/probes/-ready-"]
@@ -53,10 +53,10 @@ services:
       retries: 20
       start_period: 400s
 
-  postgres-alfresco:
+  alfresco-postgres:
     image: ${POSTGRES_IMAGE:-postgres:15.7}
-    container_name: ddev-${DDEV_SITENAME}-postgres-alfresco
-    hostname: ${DDEV_SITENAME}-postgres-alfresco
+    container_name: ddev-${DDEV_SITENAME}-alfresco-postgres
+    hostname: ${DDEV_SITENAME}-alfresco-postgres
     labels:
       com.ddev.site-name: ${DDEV_SITENAME}
       com.ddev.approot: ${DDEV_APPROOT}
@@ -72,9 +72,9 @@ services:
       timeout: 5s
       retries: 5
     volumes:
-      - postgres-alfresco-data:/var/lib/postgresql/data
+      - alfresco-postgres-data:/var/lib/postgresql/data
       - .:/mnt/ddev_config
 
 volumes:
   alfresco-data:
-  postgres-alfresco-data:
+  alfresco-postgres-data:
