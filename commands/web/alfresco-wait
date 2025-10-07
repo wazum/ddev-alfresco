@@ -15,7 +15,6 @@ while [ $ATTEMPT -lt $MAX_ATTEMPTS ]; do
         echo "✓ Alfresco is ready!"
         PRIMARY_HOSTNAME=$(echo ${DDEV_PRIMARY_URL} | sed 's|https://||')
         echo "  Alfresco: https://${PRIMARY_HOSTNAME}:8081/alfresco"
-        echo "  Share: https://${PRIMARY_HOSTNAME}:8081/share"
         echo "  Default credentials: admin/admin"
         exit 0
     fi
